@@ -1,0 +1,8 @@
+﻿flask==2.0.1
+flask-compress==1.10.1
+flask-seasurf==0.3.1
+boto3 >= 1.20.40
+opensearch-py == 1.0.0
+requests-aws4auth == 1.1.1
+pypdf2==1.26.0
+flask-cors==3.0.10

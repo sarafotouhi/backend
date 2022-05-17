@@ -1,0 +1,169 @@
+"/document":
+    POST
+        Function: Formats document in a S3 bucket and enters it into the workspace's OpenSearch index
+        Body Format: {
+             "organization": String,
+             "workspace": String,
+             "documentName": String,
+             "s3FilePath": String,
+             "s3BucketName": String
+        }
+        Parameters:
+            organization: The name of the organization that owns the document. eg "organization1"
+            workspace: The workspace name within the organization that the document should be uploaded to. eg "workspace1"
+            documentName: The document's name for OpenSearch "title" parameter. This will be used by services to search within the document. eg "Contract1.pdf"
+            s3FilePath: The full folder/file path to the document uploaded in S3 not including the bucket name. eg "folder/subfolder/document.txt"
+            s3BucketName: The name of the S3 bucket where the document has been uploaded by the caller. eg "capstone-bucket"
+
+        Returns:
+            On successful upload of document to OpenSearch:
+            status 201
+                Body Format: {
+                }
+            On unsuccessful upload of document to OpenSearch:
+            status 404
+                Body Format: {
+                }
+
+
+
+    DELETE
+        Function: Removes a document from OpenSearch index as well as S3 bucket
+        Body Format: {
+            "organization": String,
+            "workspace": String,
+            "documentName": String,
+            "s3FilePath": String,
+            "s3BucketName": String
+        }
+        Parameters:
+            organization: The name of the organization that owns the document. eg "organization1"
+            workspace: The workspace name within the organization that the document is uploaded to. eg "workspace1"
+            documentName: The document's name for OpenSearch "title" parameter. eg "Contract1.pdf"
+            s3FilePath: The full folder/file path to the document uploaded in S3 not including the bucket name. eg "folder/subfolder/document.txt"
+            s3BucketName: The name of the S3 bucket where the document has been uploaded by the caller. eg "capstone-bucket"
+
+        Returns:
+            On successful deletion of document from OpenSearch:
+            status 200
+                Body Format: {
+                }
+            On unsuccessful deletion of document from OpenSearch:
+            status 404
+                Body Format: {
+                }
+
+
+    ALL OTHER REQUEST TYPES
+        No other request types are accepted at this time
+        Returns:
+            status 406
+                Body Format: "INVALID REQUEST TYPE"
+
+    ERROR HANDLING
+        Handles errors thrown in processing of request not otherwise dealt with by documentManager (eg. errors loading request)
+        Returns:
+            status 406
+                Body Format: {
+                "error thrown": <<error message caught by code>>
+                }
+
+
+"/workspace":
+    POST
+        Function: Creates a new workspace for the organization within OpenSearch. This is where their documents will be stored.
+        Body Format: {
+             "organization": String,
+             "workspace": String
+        }
+        Parameters:
+            organization: The name of the organization that owns the new workspace. eg "organization1"
+            workspace: The name of the new workspace to create. eg "workspace1"
+
+        Returns:
+            On successful creation of the workspace in OpenSearch
+            status 201
+                Body Format: {
+                }
+            On unsuccessful creation of the workspace in OpenSearch
+            status 404
+                Body Format: {
+                }
+
+    ALL OTHER REQUEST TYPES
+        No other request types are accepted at this time
+        Returns:
+            status 406
+                Body Format: "INVALID REQUEST TYPE"
+
+    ERROR HANDLING
+        Handles errors thrown in processing of request not otherwise dealt with by documentManager (eg. errors loading request)
+        Returns:
+            status 406
+                Body Format: {
+                "error thrown": <<error message caught by code>>
+                }
+
+Please note that the below API endpoint is being used for the purposes of testing the front end in absence of service modules. This will not persist once the services have been implemented.
+"/requirements":
+        POST
+        Function: Fakes the process of sending a contract to the service module to identify requirements
+        Body Format: {
+        }
+        Parameters:
+            none
+        Returns:
+            On successful processing of the contract by the service:
+            status 201
+                Body Format: {
+			        "targetPhraseData": ["Motor nameplates", "CAN/CSA C22.2 No. 100", "", "Sealing compound for use in sealing cable entrances", "AREMA Communications and Signals Manual", "Par t 15.2.15"]
+                }
+            On unsuccessful processing of the contract by the service:
+            status 404
+                Body Format: "{Error occurred}"
+
+
+    GET
+        Function: Fakes the process of accessing additional information about a requirement produced by the service
+        Body Format: {
+        }
+        Parameters:
+            none
+        Returns:
+            On successful access of additional information:
+            status 201
+                Body Format: {
+                "Motor nameplates": {
+                    "nameofStandard": "CSAC22.2No.100-04",
+                    "req": "Motor nameplates shall conform to CAN/CSA C22.2 No . 100-04",
+                    "targetPosition": "",
+                    "score": "17.99804",
+                    "pageNumber": "58",
+                    "pageContent": "C22.2 No. 100-04© Canadian Standards Association18June 20046.2Temperature test6.2.1The temperature of machines shall meet the requirements of Table4 and Clauses6.2.4, 6.2.7, and 6.2.8 when tested as follows:(a)for motors without a marked rated output, either by loading the motor or by raising the input voltage to obtain the rated input amperes (with the motor running); or(b)for motors with a marked rated output, at the rated frequency or speed and delivering the rated output for the period of time specified on the nameplate or until constant temperatures are reached for machines having a continuous rating.6.2.26.2.2.1For the temperature test, the test voltage shall be the rated voltage except that AC motors intended for nominal ac system voltages of 120, 208, 240, 480, and 600 shall be tested at 115, 200, 230, 460, and 575V respectively.6.2.2.2DC motors in IEC frame size 80 and smaller, designed for rectifier power supply, shall be tested with anadjustable power supply that provides a rated voltage and a rated form factor at rated load (see Clause5.1(k)).6.2.3Motors marked with a service factor shall be loaded continuously at the rated voltage and frequency until the actual output is equal to the rated horsepower multiplied by the service factor.6.2.4The temperature of insulated windings shall not exceed the values specified for the particular insulation class of the machines as specified in Table4.6.2.5Except as specified in the individual clauses of this Standard, temperatures shall be measured as specified in the Notes to Table4.6.2.6Motors designed for a specific application that is covered by another standard in the C22.2 series of Standards shall be tested in accordance with the conditions of that application, including ventilation, mounting arrangements, ambient temperature, and temperature rise.6.2.7Machines having more than one electrical rating (e.g., ac and dc) shall be tested at the rating that results in the highest temperatures.6.2.86.2.8.1The temperatures on or within the terminal box and on the supply conductors shall not exceed the values in Table5, except that higher temperatures not exceeding 110 ºC shall be permitted if the machine is marked as required by Item (u) of Clause5.1.Licensed for/Autorisé à Tao Cai, Siemens Canada Limited, Sold by/vendu par CSA on/le 10/1/2009.  Single user license only.  Storage, distribution or use on network prohibited./Permis d'utilisateur simple seulement.  Le stockage, la distribution ou l'utilisation sur le réseau est interdit.",
+                        "content": [
+                            "shall meet the requirements of Table4 and Clauses6.2.4, 6.2.7, and 6.2.8 when tested as follows:(a)for <em>motors</em>",
+                            "without a marked rated output, either by loading the <em>motor</em> or by raising the input voltage to obtain",
+                            "the rated input amperes (with the <em>motor</em> running); or(b)for <em>motors</em> with a marked rated output, at the",
+                            "rated frequency or speed and delivering the rated output for the period of time specified on the <em>nameplate</em>",
+                            "120, 208, 240, 480, and 600 shall be tested at 115, 200, 230, 460, and 575V respectively.6.2.2.2DC <em>motors</em>"
+                            ]
+                    }
+            }
+            On unsuccessful access of additional information:
+            status 404
+                Body Format: "{Error occurred}"
+
+
+    ALL OTHER REQUEST TYPES
+        No other request types are accepted at this time
+        Returns:
+            status 406
+                Body Format: "INVALID REQUEST TYPE"
+
+    ERROR HANDLING
+        Handles errors thrown in processing of request not otherwise dealt with by documentManager (eg. errors loading request)
+        Returns:
+            status 406
+                Body Format: {
+                "error thrown": <<error message caught by code>>
+                }

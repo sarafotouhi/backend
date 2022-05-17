@@ -1,0 +1,20 @@
+
+class Constants:
+
+    SUCCESS_LISTING_DOCS = "Successfully retrieved list of documents in workspace {}"
+    FAILURE_CREATING_WORKSPACE = "Failed to create workspace {} due to error {}"
+    FAILURE_CREATING_WORKSPACE_ALREADY_EXISTS = "Failed to create workspace {} because it already exists"
+    SUCCESS_CREATING_WORKSPACE = "Successfully created OpenSearch index for workspace {}"
+    FAILURE_DELETING_FILE_NOT_IN_S3 = "Failed to delete S3 file {} from bucket {} because the file does not exist"
+    FAILURE_DELETING_FILE_NOT_IN_OPENSEARCH = "Failed to delete file {} from OpenSearch index {} because the file is not in the index. Error {}"
+    FAILURE_DELETING_FILE_DOC_SEARCH_FAILED = "Failed to delete file {} from OpenSearch index {} due to error at document search phase {}"
+    FAILURE_DELETING_FILE_WRONG_NUMBER_IN_OPENSEARCH = "Failed to delete file {} from OpenSearch index {} because {} files have that name"
+    SUCCESS_DELETING_FILE = "Successfully deleted file {} from S3 bucket {} and associated file {} from OpenSearch index {}"
+    FAILURE_INDEX_FILE = "Failed to upload file {} from S3 bucket {} to OpenSearch index {} due to error {}"
+    FAILURE_PROCESSING_FILE = "Failed to process file {} from S3 bucket {} during conversion to JSON for OpenSearch due to error {}"
+    FAILURE_INDEX_NOT_FOUND = "Index not found in OpenSearch for {}"
+    FAILURE_UNSUPPORTED_FILE_TYPE = "Failed to upload file {} from S3 bucket {} due to unsupported file type: {}"
+    SUCCESS_UPLOAD_TO_OPENSEARCH = "Successfully uploaded file {} from S3 bucket {} to OpenSearch index {}"
+    FAILURE_FIND_S3_FILE = "Failed to find file {} in S3 Bucket {} due to error {}"
+    SUCCESS_SETUP_LOGGER = "Logger for {} successfully set up"
+    FAILURE_SETUP_LOGGER = "Failure to set up CloudWatch Logger due to error {}"

@@ -1,0 +1,39 @@
+OpenSearch
+
+Action DELETE INDEX
+    SUCCESS => {'acknowledged': True}
+
+Action INDEX EXISTS
+    YES => True
+    NO => False
+
+
+Action CREATE INDEX
+    SUCCESS => {'acknowledged': True, 'shards_acknowledged': True, 'index': 'test-organization_test-workspace'}
+    INVALID NAME => RequestError(400, 'invalid_index_name_exception', {'error': {'root_cause': [{'type': 'invalid_index_name_exception', 'reason': 'Invalid index name [??], must not contain the following characters [ , ", *, \\, <, |, ,, >, /, ?]', 'index': '??', 'index_uuid': '_na_'}], 'type': 'invalid_index_name_exception', 'reason': 'Invalid index name [??], must not contain the following characters [ , ", *, \\, <, |, ,, >, /, ?]', 'index': '??', 'index_uuid': '_na_'}, 'status': 400}), <traceback object at 0x0964B8C8>)
+
+Action UPLOAD DOCUMENT
+    SUCCESS => {'_index': 'test-organization_test-workspace', '_type': '_doc', '_id': 'Dpqg734BZHZsFDvqRA9d', '_version': 1, 'result': 'created', '_shards': {'total': 2, 'successful': 1, 'failed': 0}, '_seq_no': 0, '_primary_term': 1}
+    SERIALIZATION ERROR OF UPLOAD => {'ResponseMetadata': {'RequestId': 'QSY512E383QP622Q', 'HostId': '7rKzebX06E53K5/ryX+Kt34yUocntuLtoEtqvu1bNHu9AZGBFQHhPdrMI1qUzgARsKxmgyZ9Cf0=', 'HTTPStatusCode': 200, 'HTTPHeaders': {'x-amz-id-2': '7rKzebX06E53K5/ryX+Kt34yUocntuLtoEtqvu1bNHu9AZGBFQHhPdrMI1qUzgARsKxmgyZ9Cf0=', 'x-amz-request-id': 'QSY512E383QP622Q', 'date': 'Sat, 12 Feb 2022 18:37:51 GMT', 'last-modified': 'Sat, 12 Feb 2022 18:18:03 GMT', 'etag': '"5be338f56d1d093228ce254fb6ce91e8"', 'x-amz-server-side-encryption': 'AES256', 'x-amz-version-id': 'Aywm8NaO.1F8z.76ymYE73RrcNlhWG_4', 'accept-ranges': 'bytes', 'content-type': 'application/json', 'server': 'AmazonS3', 'content-length': '126'}, 'RetryAttempts': 0}, 'AcceptRanges': 'bytes', 'LastModified': datetime.datetime(2022, 2, 12, 18, 18, 3, tzinfo=tzutc()), 'ContentLength': 126, 'ETag': '"5be338f56d1d093228ce254fb6ce91e8"', 'VersionId': 'Aywm8NaO.1F8z.76ymYE73RrcNlhWG_4', 'ContentType': 'application/json', 'ServerSideEncryption': 'AES256', 'Metadata': {}, 'Body': <botocore.response.StreamingBody object at 0x096145F8>}
+
+
+Action DELETE DOCUMENT
+    NOT FOUND = > NotFoundError (404, '{"_index":"test-organization_test-workspace","_type":"_doc","_id":"test-document","_version":1,"result":"not_found","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":1,"_primary_term":1}')
+    ILLEGAL ARGUMENT => RequestError(400, 'illegal_argument_exception', 'Rejecting mapping update to [test-organization_test-workspace] as the final mapping would have more than 1 type: [test-document, true]')
+    SUCCESS => {'_index': 'test-organization_test-workspace', '_type': '_doc', '_id': 'true', '_version': 2, 'result': 'deleted', '_shards': {'total': 2, 'successful': 1, 'failed': 0}, '_seq_no': 2, '_primary_term': 1}
+
+Action SEARCH FOR DOCUMENT
+    SUCCESS => {'took': 177, 'timed_out': False, '_shards': {'total': 5, 'successful': 5, 'skipped': 0, 'failed': 0}, 'hits': {'total': {'value': 1, 'relation': 'eq'}, 'max_score': 0.2876821, 'hits': [{'_index': 'test-organization_test-workspace', '_type': '_doc', '_id': '1', '_score': 0.2876821, '_source': {'title': 'Simple Test Contract', 'contents': 'This is a sample test contract for a simple index configuration. There are only title and contents in this document.'}}]}}
+    DOCUMENT NOT FOUND => {'took': 9, 'timed_out': False, '_shards': {'total': 5, 'successful': 5, 'skipped': 0, 'failed': 0}, 'hits': {'total': {'value': 0, 'relation': 'eq'}, 'max_score': None, 'hits': []}}
+
+
+Boto3 S3 Client
+
+Action GET_OBJECT
+    INVALID PARAMETER => ParameterValidationError ( message = Parameter validation failed: Invalid bucket name "https://capstone-data-bucket.s3.amazonaws.com": Bucket name must match the regex "^[a-zA-Z0-9.\-_]{1,255}$" or be an ARN matching the regex "^arn:(aws).*:(s3|s3-object-lambda):[a-z\-0-9]*:[0-9]{12}:accesspoint[/:][a-zA-Z0-9\-.]{1,63}$|^arn:(aws).*:s3-outposts:[a-z\-0-9]+:[0-9]{12}:outpost[/:][a-zA-Z0-9\-]{1,63}[/:]accesspoint[/:][a-zA-Z0-9\-]{1,63}$")
+    NO CREDENTIALS => NoCredentialsError ( message = Unable to locate credentials)
+    DOCUMENT NOT FOUND AT GIVEN KEY => NoSuchKey ( message = An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.)
+    SUCCESS => {'ResponseMetadata': {'RequestId': '9A9BSMW540SHW7NT', 'HostId': 'rutO4omIxEiO802SNIp5QRkDZHIzlWq8sb6nRN55LFLsANj4CWrOwU8SpI0EXZCb9d9Wb5BcLjY=', 'HTTPStatusCode': 200, 'HTTPHeaders': {'x-amz-id-2': 'rutO4omIxEiO802SNIp5QRkDZHIzlWq8sb6nRN55LFLsANj4CWrOwU8SpI0EXZCb9d9Wb5BcLjY=', 'x-amz-request-id': '9A9BSMW540SHW7NT', 'date': 'Sat, 12 Feb 2022 16:23:34 GMT', 'last-modified': 'Tue, 01 Feb 2022 14:17:54 GMT', 'etag': '"f43b53dedda12ce63645d80062bfb188"', 'x-amz-server-side-encryption': 'AES256', 'x-amz-version-id': 'NjemyTbCCaqiMN_VuW2c1Zklbx2Qceio', 'accept-ranges': 'bytes', 'content-type': 'application/json', 'server': 'AmazonS3', 'content-length': '174'}, 'RetryAttempts': 0}, 'AcceptRanges': 'bytes', 'LastModified': datetime.datetime(2022, 2, 1, 14, 17, 54, tzinfo=tzutc()), 'ContentLength': 174, 'ETag': '"f43b53dedda12ce63645d80062bfb188"', 'VersionId': 'NjemyTbCCaqiMN_VuW2c1Zklbx2Qceio', 'ContentType': 'application/json', 'ServerSideEncryption': 'AES256', 'Metadata': {}, 'Body': <botocore.response.StreamingBody object at 0x097644C0>}
+
+Action DELETE_OBJECT
+    SUCCESS => {'ResponseMetadata': {'RequestId': 'CWMNQ2V739J82YCJ', 'HostId': 'mCd3M6fjpjgSiVeNI4mfXvtd0hfkO6oLAe9DE8kG/vpLC+iHlDOG0dtwsd08wRjb2u7N8TWpKBY=', 'HTTPStatusCode': 204, 'HTTPHeaders': {'x-amz-id-2': 'mCd3M6fjpjgSiVeNI4mfXvtd0hfkO6oLAe9DE8kG/vpLC+iHlDOG0dtwsd08wRjb2u7N8TWpKBY=', 'x-amz-request-id': 'CWMNQ2V739J82YCJ', 'date': 'Sat, 12 Feb 2022 18:52:26 GMT', 'x-amz-version-id': 'kT.LqVe7jFSkUrn6R8Jk0eldvI7h9f9i', 'x-amz-delete-marker': 'true', 'server': 'AmazonS3'}, 'RetryAttempts': 0}, 'DeleteMarker': True, 'VersionId': 'kT.LqVe7jFSkUrn6R8Jk0eldvI7h9f9i'}

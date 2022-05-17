@@ -1,0 +1,15 @@
+{
+  "name": "mock-api",
+  "version": "1.0.0",
+  "description": "A simple JSON mock API",
+  "main": "index.js",
+  "scripts": {
+    "start": "json-server --watch src/db.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Maah Asghar",
+  "license": "ISC",
+  "dependencies": {
+    "json-server": "^0.17.0"
+  }
+}
